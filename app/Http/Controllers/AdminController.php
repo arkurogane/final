@@ -18,7 +18,13 @@ class AdminController extends Controller
     public function read_Docente()
     {
         $profs =new User;
-        $profs = DB::table('users')->select()->where('rol','2')->get();
+        $doc=DB::table('rols')->select('id')->where('nombre', 'doc')->first();
+        $docentes=DB::table('rol_user')->select('user_id')->where('rol_id',2)->get();
+   
+        $profs = DB::table('users')->select()->where('rol',2)->get();
+
+        //dd($profs);
+        
         return view('admin.docentes',[
             'profs'=>$profs,
         ]);

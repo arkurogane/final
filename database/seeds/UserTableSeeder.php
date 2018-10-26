@@ -22,6 +22,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Juan';
         $user->apellido='Perez';
         $user->rut = '17256854-8';
+        $user->rol=3;
         $user->email = 'alm@example.com';
         $user->password = bcrypt('secret');
         $user->save();
@@ -38,6 +39,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'Dinosaurio';
         $user->apellido='Anacleto';
         $user->rut = '12345678-9';
+        $user->rol=2;
         $user->email = 'doc@example.com';
         $user->password = bcrypt('secret');
         $user->save();
@@ -47,6 +49,7 @@ class UserTableSeeder extends Seeder
         $user->name = 'juan carlos';
         $user->apellido='Bodoque';
         $user->rut = '13245687-2';
+        $user->rol=1;
         $user->email = 'admin@example.com';
         $user->password = bcrypt('secret');
         $user->save();

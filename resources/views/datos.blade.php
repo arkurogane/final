@@ -15,22 +15,24 @@
                     @endif
 
                     @if(Auth::user()->hasRol('admin'))
-                        <br><h4>Nombre:</h4><span>{{ Auth::user()->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ Auth::user()->apellido }}</span><br>
-                        <br><h4>RUT:</h4><span>{{ Auth::user()->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ Auth::user()->email }}</span><br>
+                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
+                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
+                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
+                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
                     @elseif(Auth::user()->hasRol('doc'))
-                        <br><h4>Nombre:</h4><span>{{ Auth::user()->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ Auth::user()->apellido }}</span><br>
-                        <br><h4>RUT:</h4><span>{{ Auth::user()->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ Auth::user()->email }}</span><br>
+                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
+                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
+                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
+                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
                     @else
-                        <br><h4>Nombre:</h4><span>{{ Auth::user()->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ Auth::user()->apellido }}</span><br>
-                        <br><h4>Matricula:</h4><span>{{Auth::user()->matricula}}</span>
-                        <br><h4>RUT:</h4><span>{{ Auth::user()->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ Auth::user()->email }}</span><br>
+                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
+                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
+                        <br><h4>Matricula:</h4><span>{{ $alumno->matricula }}</span>
+                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
+                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
                     @endif
+
+                    <a href="/cambiapassword/{{ $user->id}}">cambiar contraseña</a>
                 </div>
             </div>
         </div>
