@@ -4,104 +4,145 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <meta http-equiv="cache-control" content="max-age=0" />
-    <meta http-equiv="cache-control" content="no-cache" />
-    <meta http-equiv="cache-control" content="no-store" />
-    <meta http-equiv="cache-control" content="must-revalidate" />
-    <meta http-equiv="expires" content="0" />
-    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-    <meta http-equiv="pragma" content="no-cache" />
-
-
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Last-Modified" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <!-- Stylesheet -->
+    <link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/gallery-materialize.min.opt.css?8268030955633692047" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/rut.js') }}" ></script>
+    <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="nav-wrapper purple lighten-3">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <a class="brand-logo" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+                <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
-                                @endif
-                            </li>
-                        @else
-                            
-                            @if(Auth::user()->hasRol('admin'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('docentes') }}">{{ __('Docentes') }}</a>
-                                </li>
+                <ul class="right hide-on-med-and-down">
+                    <!-- Authentication Links -->
+                    @guest
+                        <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                        <li>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
-
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="datos/{{ Auth::user()->id }}">{{ __('Mis Datos') }}</a>
+                        </li>
+                    @else
+                        @if(Auth::user()->hasRol('admin'))
+                            <li>
+                                <a href="{{ route('docentes') }}">{{ __('Docentes') }}</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        @endif
+
+
+                        <li>
+                            <a href="/datos/{{ Auth::user()->id }}">{{ __('Mis Datos') }}</a>
+                        </li>
+
+
+                        <li>
+                            <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                               data-activates="drop1" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a>
+                            </a>
+                        </li>
+                        <ul class="dropdown-content" id="drop1">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
                             </li>
-                        @endguest
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </ul>
+                    @endguest
                     </ul>
-                </div>
             </div>
         </nav>
+
+
+        <!--sidenav-->
+        <ul class="sidenav pink lighten-3" id="mob">
+
+            @guest
+                <li><div class="divider"></div></li>
+                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                <li><div class="divider"></div></li>
+                <li>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}">{{ __('Register') }}<i class="material-icons">edit</i></a>
+                    @endif
+                </li>
+            @else
+                <li><div class="divider"></div></li>
+                    @if(Auth::user()->hasRol('admin'))
+                        <li>
+                            <a href="{{ route('docentes') }}">{{ __('Docentes') }}</a>
+                        </li>
+                        <li><div class="divider"></div></li>
+                    @endif
+                <li><a href="/datos/{{ Auth::user()->id }}">{{ __('Mis Datos') }}</a></li>
+                <li><div class="divider"></div></li>
+                <li>
+                    <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                       data-activates="drop" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a>
+                    </a>
+
+                    <ul class="dropdown-content" id="drop">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                        </li>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </ul>
+                </li>
+                <li><div class="divider"></div></li>
+            @endguest
+        </ul>
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/materialize.js') }}"></script>
+    <script src="{{ asset('js/prueba.js') }}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="{{ asset('js/rut.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //var elems = document.querySelectorAll('.sidenav');
+            //var instances = M.Sidenav.init(elems);
+            M.AutoInit();
+        });
+
+        document.addEventListener('DOMContentLoader', function() {
+            instance.open();
+        })
+    </script>
 </body>
 </html>

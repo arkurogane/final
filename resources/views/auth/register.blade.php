@@ -3,19 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col s12">
             <div class="card">
-                <div class="card-header">{{ __('Registro') }}</div>
+                <div class="card-title center">{{ __('Register') }}</div>
 
-                <div class="card-body">
+                <div class="card-content">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                            <div class="push-s1 col s10">
+                                <input id="name" placeholder="{{ __('Nombre') }}" type="text" class="input-field validate{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -26,10 +24,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="apellido" class="col-md-4 col-form-label text-md-right">{{ __('Apellido') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="apellido" type="text" class="form-control{{ $errors->has('apellido') ? ' is-invalid' : '' }}" name="apellido" value="{{ old('apellido') }}" required>
+                            <div class="push-s1 col s10">
+                                <input id="apellido" placeholder="{{ __('Apellido') }}" type="text" class="validate {{ $errors->has('apellido') ? ' is-invalid' : '' }}" name="apellido" value="{{ old('apellido') }}" required>
 
                                 @if ($errors->has('apellido'))
                                     <span class="invalid-feedback" role="alert">
@@ -40,10 +36,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="rut" class="col-md-4 col-form-label text-md-right">{{ __('Rut') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="rut" type="text" oninput="checkRut(this)" class="form-control{{ $errors->has('rut') ? ' is-invalid' : '' }}" name="rut" value="{{ old('rut') }}" required>
+                            <div class="push-s1 col s10">
+                                <input id="rut" type="text" placeholder="{{ __('Rut') }}" oninput="checkRut(this)" class="validate {{ $errors->has('rut') ? ' is-invalid' : '' }}" name="rut" value="{{ old('rut') }}" required>
 
                                 @if ($errors->has('rut'))
                                     <span class="invalid-feedback" role="alert">
@@ -52,13 +46,10 @@
                                 @endif
                             </div>
                         </div>
-                        
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                            <div class="push-s1 col s10">
+                                <input id="email" placeholder="{{ __('E-Mail') }}" type="email" class="validate{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -69,10 +60,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            <div class="push-s1 col s10">
+                                <input id="password" placeholder="{{ __('Password') }}" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
@@ -83,17 +72,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="push-s1 col s10">
+                                <input id="password-confirm" placeholder="{{ __('Confirmar Password') }}" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Registro') }}
+                        <div class="row center">
+                            <div class="col s12">
+                                <button type="submit" class="btn-large blue">
+                                    {{ __('Register') }}
+                                    <i class="material-icons right">send</i>
                                 </button>
                             </div>
                         </div>

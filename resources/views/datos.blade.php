@@ -5,36 +5,79 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Datos</div>
+                <div class="card-title center">Datos</div>
 
-                <div class="card-body">
+                <div class="card-content">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <table class="col s6 push-s3 centered">
                     @if(Auth::user()->hasRol('admin'))
-                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
-                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
+                        
+                            <tr>
+                                <th>Nombre:</th>
+                                <td>{{ $user->name }}</td>  
+                            </tr>
+                            <tr>
+                                <th>Apellido:</th>
+                                <td>{{ $user->apellido }}</td>
+                            </tr>
+                            <tr>
+                                <th>RUT:</th>
+                                <td>{{ $user->rut }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                        
                     @elseif(Auth::user()->hasRol('doc'))
-                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
-                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
+                    <tr>
+                            <th>Nombre:</th>
+                            <td>{{ $user->name }}</td>  
+                        </tr>
+                        <tr>
+                            <th>Apellido:</th>
+                            <td>{{ $user->apellido }}</td>
+                        </tr>
+                        <tr>
+                            <th>RUT:</th>
+                            <td>{{ $user->rut }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ $user->email }}</td>
+                        </tr>
                     @else
-                        <br><h4>Nombre:</h4><span>{{ $user->name }}</span><br>
-                        <br><h4>Apellido:</h4><span>{{ $user->apellido }}</span><br>
-                        <br><h4>Matricula:</h4><span>{{ $alumno->matricula }}</span>
-                        <br><h4>RUT:</h4><span>{{ $user->rut }}</span><br>
-                        <br><h4>Email:</h4><span>{{ $user->email }}</span><br>
+                    <tr>
+                            <th>Nombre:</th>
+                            <td>{{ $user->name }}</td>  
+                        </tr>
+                        <tr>
+                            <th>Apellido:</th>
+                            <td>{{ $user->apellido }}</td>
+                        </tr>
+                        <tr>
+                            <th>Matricula:</th>
+                            <td>{{ $alumno->matricula }}</td>
+                        </tr>
+                        <tr>
+                            <th>RUT:</th>
+                            <td>{{ $user->rut }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ $user->email }}</td>
+                        </tr>
                     @endif
-
-                    <a href="/cambiapassword/{{ $user->id}}">cambiar contraseña</a>
+                    </table>
+                    <br><br><br><br><br><br><br><br><br><br><br><br>
                 </div>
+                
             </div>
+            <a href="/cambiapassword/{{ $user->id}}">cambiar contraseña</a>
         </div>
     </div>
 </div>
