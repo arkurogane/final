@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Rol;
-
+use App\Asignatura;
+use App\Http\Requests\CreateAsignaturaRequest;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller

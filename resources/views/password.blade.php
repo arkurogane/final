@@ -3,20 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col s8 push-s2">
+        <div class="col s12 ">
             <div class="card">
                 <div class="card-title center">Datos</div>
 
                 <div class="card-content">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    @if($save==1)
+                        <div class="card-panel green darken-2">Contraseña cambiada con exito!</div>
+                    @endif
+                    @if($save==2)
+                        <div class="card-panel red darken-2">ingrese su contraseña actual!</div>
                     @endif
 
-                    <form method="POST" action="/cambiar/{{ $user->id }}">
+                    <form method="POST" action="/cambiar">
                             @csrf
-    
+
                             <div class="form-group row">
                                 <div class="col s12">
                                     <input id="password" placeholder="{{ __('Password') }}" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>

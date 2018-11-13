@@ -61,7 +61,11 @@
                         </tr>
                         <tr>
                             <th>Matricula:</th>
-                            <td>{{ $alumno->matricula }}</td>
+                                    @foreach ($alumnos as $alumno)
+                                    @if($user->id==$alumno->user_id)
+                                    <td>{{ $alumno->matricula }}</td>
+                                    @endif
+                                @endforeach
                         </tr>
                         <tr>
                             <th>RUT:</th>
@@ -77,7 +81,7 @@
                 </div>
                 
             </div>
-            <a href="/cambiapassword/{{ $user->id}}">cambiar contraseña</a>
+            <a href="/cambiapassword">cambiar contraseña</a>
         </div>
     </div>
 </div>

@@ -7,8 +7,9 @@ use App\Alumno;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -39,47 +40,42 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function datos($id)
+    public function datos()
     {
-            $user=User::find($id);
-            $alumno=new Alumno;
-            //$alumno=Alumno::where('user_id',$id)->get();
-            $alumno->matricula = DB::table('alumnos')->select('matricula')->where('user_id',$id)->get();
-            //$alumno = Alumno::where('user_id',$id)->get();
-            //dd($alumno);
-            return view('datos',[
-                'user'=>$user,
-                'alumno'=>$alumno,
-            ]);
-            
-        
-    }
-
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        $id = Auth::id();
+        $user=User::find($id);
+        $alumno=new Alumno;
+        $alumnos = DB::table('alumnos')->select('*')->get();
+        return view('datos',[
+            'user'=>$user,
+            'alumnos'=>$alumnos,
         ]);
     }
 
-    public function cambiar($id)
+    public function cambiar(UpdatePasswordRequest $request)
     {
-        //if(validator($_POST['password'])==true){
-            $user =User::find($id);
-            $user->password =  Hash::make($_POST['password']);
-            $user->save();
-        //}
-        return redirect("/datos/$user->id");
+        $save=3;
+        $id = Auth::id();
+        $user =User::find($id);
         
+        $user->password =  Hash::make($request->input('password'));
+        $user->save();
+        $save=1;
+
+        return view("/password",[
+            'save'=>$save,
+        ]);
         
     }
 
-    public function cambiapassword($id)
+    public function cambiapassword()
     {
+        $save=false;
+        $id = Auth::id();
         $user =User::find($id);
         return view('password',[
             'user'=>$user,
+            'save'=>$save,
         ]);
     }
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -20,13 +21,27 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
+    @auth 
+    <style>
+         header, main, footer {
+      padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+    </style>
+    @endauth
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
+    
 </head>
 <body>
     <div id="app">
         <nav class="nav-wrapper purple lighten-3">
             <div class="container">
-                <a class="brand-logo" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+                
                 <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
                 <ul class="right hide-on-med-and-down">
@@ -40,14 +55,26 @@
                         </li>
                     @else
                         @if(Auth::user()->hasRol('admin'))
+                            <li><a href="{{ route('docentes') }}">{{ __('Docentes') }}</a></li>
+                        @endif
+                        @if(Auth::user()->hasRol('doc'))
+                            <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
                             <li>
-                                <a href="{{ route('docentes') }}">{{ __('Docentes') }}</a>
+                                <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                                    data-activates="cursos2" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Cursos<i class="material-icons right">arrow_drop_down</i></a>
+                                </a>
+                                <ul class="dropdown-content" id="cursos2">
+                                    <li><a href="{{ route('crearCurso') }}">{{ __('Crear Curso') }}</a></li>
+                                    <li><a href="{{ route('listaCurso') }}">{{ __('listar Cursos') }}</a></li>
+                                    <li><a href="{{ route('cursosCerrados') }}">{{ __('Cursos Cerrados') }}</a></li>
+                                </ul>
                             </li>
                         @endif
 
 
                         <li>
-                            <a href="/datos/{{ Auth::user()->id }}">{{ __('Mis Datos') }}</a>
+                            <a href="/datos">{{ __('Mis Datos') }}</a>
                         </li>
 
 
@@ -73,11 +100,9 @@
                     </ul>
             </div>
         </nav>
-
-
         <!--sidenav-->
-        <ul class="sidenav pink lighten-3" id="mob">
-
+        <ul class="sidenav @auth sidenav-fixed @endauth  pink lighten-3" id="mob">
+                <li><a class="brand-logo" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a></li>
             @guest
                 <li><div class="divider"></div></li>
                 <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
@@ -95,7 +120,23 @@
                         </li>
                         <li><div class="divider"></div></li>
                     @endif
-                <li><a href="/datos/{{ Auth::user()->id }}">{{ __('Mis Datos') }}</a></li>
+                    @if(Auth::user()->hasRol('doc'))
+                            <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
+                            <li><div class="divider"></div></li>
+                            <li>
+                                <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                                    data-activates="cursos" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Cursos<i class="material-icons right">arrow_drop_down</i></a>
+                                </a>
+                                <ul class="dropdown-content" id="cursos">
+                                    <li><a href="{{ route('crearCurso') }}">{{ __('Crear Curso') }}</a></li>
+                                    <li><a href="{{ route('listaCurso') }}">{{ __('listar Cursos') }}</a></li>
+                                    <li><a href="{{ route('cursosCerrados') }}">{{ __('Cursos Cerrados') }}</a></li>
+                                </ul>
+                            </li>
+                            <li><div class="divider"></div></li>
+                        @endif
+                <li><a href="/datos">{{ __('Mis Datos') }}</a></li>
                 <li><div class="divider"></div></li>
                 <li>
                     <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
@@ -105,9 +146,7 @@
 
                     <ul class="dropdown-content" id="drop">
                         <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
                         </li>
@@ -135,8 +174,6 @@
 <script src="{{ asset('js/rut.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            //var elems = document.querySelectorAll('.sidenav');
-            //var instances = M.Sidenav.init(elems);
             M.AutoInit();
         });
 
@@ -144,5 +181,12 @@
             instance.open();
         })
     </script>
+    <script>
+            var url = document.URL;
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, url);
+            });
+        </script>
 </body>
 </html>
