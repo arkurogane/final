@@ -14,10 +14,13 @@
                     @if($save==2)
                         <div class="card-panel red darken-2">No se puede agregar un curso ya existente!!</div>
                     @endif
+                    @if($save==4)
+                        <div class="card-panel red darken-2">El codigo ya esta en uso!!</div>
+                    @endif
                     <form method="POST" action="{{'/creaCurso' }}">
                         @csrf
 
-                        <div class="input-field col s6">
+                        <div class="input-field col l6 s12">
                             <select id="asignatura" name="asignatura" required>
                                 <option value="" disabled selected>Elija una opción</option>
                                 @foreach ($asignaturas as $asignatura)  
@@ -25,9 +28,18 @@
                                 @endforeach
                             </select>
                             <label>Seleccione Asignatura</label>
-                          </div>
+                        </div>
 
-                        <div class="input-field col s6">
+                        <div class="input-field col l6 s12">
+                            <input id="codigo" min="1" max="10" placeholder="{{ __('Codigo') }}" type="text" class="{{ $errors->has('codigo') ? ' is-invalid' : '' }}" name="codigo" value="{{ old('codigo') }}" required>
+                            @if ($errors->has('codigo'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('codigo') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="input-field col l6 s12">
                             <input id="seccion" min="1" max="10" placeholder="{{ __('Sección') }}" type="number" class="{{ $errors->has('seccion') ? ' is-invalid' : '' }}" name="seccion" value="{{ old('seccion') }}" required>
                             @if ($errors->has('seccion'))
                                 <span class="invalid-feedback" role="alert">
@@ -36,7 +48,7 @@
                             @endif
                         </div>
 
-                        <div class="input-field col s6">
+                        <div class="input-field col l6 s12">
                             <input id="semestre" min='1' max="2" placeholder="{{ __('Semestre') }}" type="number" class="{{ $errors->has('semestre') ? ' is-invalid' : '' }}" name="semestre" value="{{ old('semestre') }}" required>
 
                             @if ($errors->has('semestre'))
@@ -46,7 +58,7 @@
                             @endif
                         </div>
 
-                        <div class="input-field col s6">
+                        <div class="input-field col l6 s12">
                             <input id="year" placeholder="{{ __('Año') }}" type="number" class="{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" value="{{ old('year') }}" required>
 
                             @if ($errors->has('year'))

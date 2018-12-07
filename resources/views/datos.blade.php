@@ -60,14 +60,6 @@
                             <td>{{ $user->apellido }}</td>
                         </tr>
                         <tr>
-                            <th>Matricula:</th>
-                                    @foreach ($alumnos as $alumno)
-                                    @if($user->id==$alumno->user_id)
-                                    <td>{{ $alumno->matricula }}</td>
-                                    @endif
-                                @endforeach
-                        </tr>
-                        <tr>
                             <th>RUT:</th>
                             <td>{{ $user->rut }}</td>
                         </tr>

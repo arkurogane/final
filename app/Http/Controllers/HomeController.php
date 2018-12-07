@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Alumno;
 use App\User;
+use App\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdatePasswordRequest;
@@ -28,27 +29,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*
-    public function index()
-    {
-        return view('home');
-    }*/
 
     public function index(Request $request)
     {
+
+        $id=Auth::id();
+        $rols=User::select('*')->where('id',$id)->get();
+        foreach($rols as $rol){
+            $r=$rol->rol;
+        }
+
+        $notificaciones=Notification::select('*')->where('receiver_id',$id)->latest()->paginate(10);
+
+        
         $request->user()->authorizeRols(['alm', 'doc', 'admin']);
-        return view('home');
+        return view('home',[
+            'notificaciones'=>$notificaciones,
+        ]);
     }
 
     public function datos()
     {
         $id = Auth::id();
         $user=User::find($id);
-        $alumno=new Alumno;
-        $alumnos = DB::table('alumnos')->select('*')->get();
         return view('datos',[
             'user'=>$user,
-            'alumnos'=>$alumnos,
         ]);
     }
 
@@ -57,15 +62,12 @@ class HomeController extends Controller
         $save=3;
         $id = Auth::id();
         $user =User::find($id);
-        
         $user->password =  Hash::make($request->input('password'));
         $user->save();
         $save=1;
-
         return view("/password",[
             'save'=>$save,
         ]);
-        
     }
 
     public function cambiapassword()

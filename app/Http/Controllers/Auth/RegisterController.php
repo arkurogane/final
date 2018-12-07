@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'rut' => ['required','string','max:12','unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'tipo' => ['required'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
@@ -67,13 +68,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $rol_user = Rol::where('nombre', 'doc')->first();
+        $rol_user = Rol::where('nombre', $data['tipo'])->first();
 
         $user = new User();
         $user->name = $data['name'];
         $user->apellido=$data['apellido'];
         $user->rut = $data['rut'];
-        $user->rol=2;
+        $user->rol=$rol_user->id;
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
         $user->save();

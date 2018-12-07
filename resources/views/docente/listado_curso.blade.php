@@ -13,20 +13,16 @@
                                 <th>asignatura</th>
                                 <th>seccion</th>
                                 <th>semestre</th>
-                                <th>año</th>
-                                <th>Cerrar Curso</th>
+                                <th>Detalles</th>
                               </tr>
                             </thead>
-                              
                     @foreach ($cursos as $curso)  
                             <tbody>
                               <tr>
                                 <td>{{ $curso->nombre }}</td>
                                 <td>{{ $curso->seccion }}</td>
-                                <td>{{ $curso->semestre }}</td>
-                                <td>{{ $curso->year }}</td>                                
-                                <td><a onClick="javascript: return confirm('¿Estas seguro de Cerrar este Curso?');" href="cerrarCurso/{{ $curso->id }}">Cerrar</a></td>
-                             </tr>
+                                <td>{{ $curso->semestre }}</td>                             
+                                <td><a href="/cursoDetalle/{{ $curso->id }}">detalles</a></td>                             </tr>
                             </tbody>          
                     @endforeach
                     </table>

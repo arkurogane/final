@@ -17,16 +17,23 @@
         <!-- Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Styles -->
+        <style>
+        .uno{
+            height: 2em;
+            width: 5em;
+            border-radius: 1em;
+        }
+        </style>
         <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
 
     </head>
-    <body class="deep-orange lighten-5">
+    <body class="cyan lighten-5">
         <div class="flex-center position-ref full-height">
             
 
-            <nav class="nav-wrapper purple lighten-3">
+            <nav class="nav-wrapper cyan darken-2">
                 <div class="container">
-                    <a class="brand-logo" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+                    <a class="brand-logo" href="{{ url('/') }}"><img class="uno" src="{{ asset('imagenes/logo1.png') }}" alt=""></a>
                     <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     
                     @if (Route::has('login'))
@@ -37,7 +44,7 @@
                                 <li><a href="{{ route('login') }}">Login</a></li>
 
                                 @if (Route::has('register'))
-                                    <li><a href="{{ route('register') }}">Register</a></li>
+                                    <li><a href="{{ route('register') }}">Registro</a></li>
                                 @endif
                             @endauth
                         </ul>
@@ -46,12 +53,10 @@
             </nav>
             <!--sidebar-->
             @if (Route::has('login'))
-            <ul class="sidenav pink lighten-3" id="mob">
+            <ul class="sidenav teal accent-4" id="mob">
                 <li><div class="divider"></div></li>
                 <li><a class="brand-logo" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a></li>
                 <li><div class="divider"></div></li>
-                
-                        
                 @auth
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><div class="divider"></div></li>
@@ -64,12 +69,10 @@
                         <li><div class="divider"></div></li>
                     @endif
                 @endauth
-
-                
             </ul>
             @endif    
 
-            <div class="container">
+            <div class="container ">
                 <br>
                 <div class="slider">
                     <ul class="slides">
@@ -119,7 +122,7 @@
             </div>
         </div>
 
-        <footer class="page-footer">
+        <footer class="page-footer cyan darken-2">
                 <div class="container">
                   <div class="row">
                     <div class="col l6 s12">

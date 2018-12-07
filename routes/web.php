@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 
 Route::group(['middleware' => 'auth'],function (){
@@ -39,7 +39,39 @@ Route::get('/crearCurso', 'DocenteController@crearCurso')->name('crearCurso')->m
 Route::post('/creaCurso', 'DocenteController@creaCurso')->name('creaCurso')->middleware('doc','auth');
 
 Route::get('/listaCurso','DocenteController@listaCurso')->name('listaCurso')->middleware('doc','auth');
+Route::get('/cursoDetalle/{id}', 'DocenteController@cursoDetalle')->name('cursoDetalle')->middleware('doc','auth');
 
 Route::get('/cerrarCurso/{id}', 'DocenteController@cerrarCurso')->name('cerrarCurso')->middleware('doc','auth');
 
 Route::get('/cursosCerrados', 'DocenteController@cursosCerrados')->name('cursosCerrados')->middleware('doc','auth');
+
+Route::get('/Actividades', 'DocenteController@Actividades')->name('Actividades')->middleware('doc','auth');
+Route::post('/createActividad', 'DocenteController@createActividad')->name('createActividad')->middleware('doc','auth');
+Route::get('/actividadDetalle/{id}', 'DocenteController@actividadDetalle')->name('actividadDetalle')->middleware('doc','auth');
+Route::get('/cursoDetalle/addActividad/{id}', 'DocenteController@addActividad')->name('addActividad')->middleware('doc','auth');
+Route::post('/actividadCurso', 'DocenteController@actividadCurso')->name('actividadCurso')->middleware('doc','auth');
+Route::get('/cursoDetalle/dropActividad/{id}', 'DocenteController@dropActividad')->name('dropActividad')->middleware('doc','auth');
+Route::post('/deleteActividadCurso', 'DocenteController@deleteActividadCurso')->name('deleteActividadCurso')->middleware('doc','auth');
+Route::get('/deleteActividad/{id}', 'DocenteController@deleteActividad')->name('deleteActividad')->middleware('doc','auth');
+Route::get('/updateActividad/{id}', 'DocenteController@updateActividad')->name('updateActividad')->middleware('doc','auth');
+Route::post('/ActividadUpdate', 'DocenteController@ActividadUpdate')->name('ActividadUpdate')->middleware('doc','auth');
+
+
+Route::get('/alumnosCurso/{id}', 'DocenteController@alumnosCurso')->name('alumnosCurso')->middleware('doc','auth');
+Route::get('/asignarPuntos/{id}', 'DocenteController@asignarPuntos')->name('asignarPuntos')->middleware('doc','auth');
+Route::get('/detallesAlumno/{id}/{id_c}', 'DocenteController@detallesAlumno')->name('detallesAlumno')->middleware('doc','auth');
+Route::get('/quitarAlumno/{id}', 'DocenteController@quitarAlumno')->name('quitarAlumno')->middleware('doc','auth');
+Route::post('/puntos', 'DocenteController@puntos')->name('puntos')->middleware('doc','auth');
+
+
+Route::get('/addParticipantes','DocenteController@addParticipantes')->name('addParticipantes')->middleware('doc','auth');
+Route::post('/crearParticipante', 'Docentecontroller@crearParticipante');
+
+Route::get('/Participante', 'AlumnoController@Participante')->name('Participante')->middleware('auth');
+Route::post('/Participar', 'AlumnoController@Participar')->name('Participar')->middleware('auth');
+
+Route::get('/cursos', 'AlumnoController@cursos')->name('cursos')->middleware('auth');
+Route::get('/curso_detalle/{id}', 'AlumnoController@curso_detalle')->name('curso_detalle')->middleware('auth');
+Route::get('/premios/{id}', 'AlumnoController@premios')->name('premios')->middleware('auth');
+Route::get('/actividad_detalle/{id1}/{id2}', 'AlumnoController@actividad_detalle')->name('actividad_detalle')->middleware('auth');
+Route::post('/canjear', 'AlumnoController@canjear')->name('canjear')->middleware('auth');

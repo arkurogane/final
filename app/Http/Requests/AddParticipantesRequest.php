@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCursoRequest extends FormRequest
+class AddParticipantesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,9 @@ class CreateCursoRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   
         return [
-            'codigo'=>['required'],
-            'seccion'=>['required'],
-            'semestre'=>['required'],
-            'year'=>['required'],
-            'asignatura'=>['required'],
+            'codigo'=>['required','string'],
         ];
     }
 }

@@ -10,7 +10,7 @@ class Curso extends Model
     //
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['nombre','seccion','semestre','year','asignatura_id','docente_id'];
+    protected $fillable = ['nombre','codigo','seccion','semestre','year','asignatura_id','docente_id'];
 
     
     
