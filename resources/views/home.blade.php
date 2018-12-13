@@ -25,12 +25,11 @@
                 <table class="col l8 push-l2 ">
                     <tr>
                         <th>Notificacion</th>
-                        <th>detalle</th>
                     </tr>
                 @foreach ($notificaciones as $notificacion)
                     <tr>
                         <td>{{ $notificacion->descripcion }}</td>
-                        <td><a href="#">Más</a></td>
+                        
                     </tr>
                 @endforeach
                 </table>

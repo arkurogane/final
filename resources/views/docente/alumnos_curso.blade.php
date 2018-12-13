@@ -19,6 +19,7 @@
                                     <th>Nombre</th>
                                     <th>Apellido</th>
                                     <th>Detalles</th>
+                                    <th>Conversacion</th>
                                 </tr>
                             </thead>
                             @foreach ($alumnos as $alumno)  
@@ -28,8 +29,10 @@
                                         <tr><td>{{ $alumno->name }}</td>
                                             <td>{{ $alumno->apellido }}</td>
                                             @foreach ($cursos as $curso)
-                                                <td><a href="/detallesAlumno/{{ $alumno->id }}/{{ $curso->id }}">Detalles</a></td></tr>
+                                                <td><a href="/detallesAlumno/{{ $alumno->id }}/{{ $curso->id }}">Detalles</a></td>
                                             @endforeach
+                                            <td><a href="/crearConversacion/{{ $alumno->id }}">Enviar Mensaje</a></td>
+                                        </tr>
                                     @endif
                                 @endforeach
                             </tbody>          

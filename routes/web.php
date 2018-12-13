@@ -75,3 +75,15 @@ Route::get('/curso_detalle/{id}', 'AlumnoController@curso_detalle')->name('curso
 Route::get('/premios/{id}', 'AlumnoController@premios')->name('premios')->middleware('auth');
 Route::get('/actividad_detalle/{id1}/{id2}', 'AlumnoController@actividad_detalle')->name('actividad_detalle')->middleware('auth');
 Route::post('/canjear', 'AlumnoController@canjear')->name('canjear')->middleware('auth');
+
+Route::get('/conversaciones', 'DocenteController@conversations')->name('conversations')->middleware('doc','auth');
+Route::get('/crearConversacion/{alumno_id}','DocenteController@createConversation')->name('crearConversacion')->middleware('doc','auth');
+Route::post('/crearMensaje','DocenteController@createMessage')->name('crearMensaje')->middleware('doc','auth');
+Route::get('/mensajes/{id}', 'DocenteController@messages')->middleware('doc','auth');
+
+Route::get('/conversacionDocente', 'AlumnoController@conversations')->name('conversacionDocente')->middleware('auth');
+Route::get('/crear_conversacion_docente/{curso_id}','AlumnoController@createConversation')->middleware('auth');
+Route::post('/mensajeDocente','AlumnoController@createMessage')->name('mensajeDocente')->middleware('auth');
+Route::get('/mensajes_a_docente/{id}', 'AlumnoController@messages')->middleware('auth');
+
+Route::get('/paginaNotificaciones', 'HomeController@pageNotification')->name('paginaNotificaciones')->middleware('auth');

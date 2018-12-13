@@ -35,6 +35,10 @@
                                     <th>Alumnos</th>
                                     <td><a href="/premios/{{ $curso->id }}" class="btn green">Ver Premios</a></td>
                                 </tr>
+                                <tr>
+                                    <th>Enviar Mensaje a docente</th>
+                                    <td><a href="/crear_conversacion_docente/{{ $curso->id }}" class="btn blue">Mensaje</a></td>
+                                </tr>
                             </tbody>          
                     @endforeach
                     </table>

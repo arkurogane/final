@@ -145,8 +145,8 @@
                     <li><div class="divider"></div></li>
                 @endif
                 @if(Auth::user()->hasRol('doc'))
-                    <!--<li><a href="{{ route('addParticipantes') }}">{{ __('Añadir Participantes') }}</a></li>
-                    <li><div class="divider"></div></li>-->
+                    <li><a href="{{ route('conversations') }}">Mensajes</a></li>
+                    <li><div class="divider"></div></li>
                     <li><a href="{{ route('Actividades') }}" >{{ __('Crear Actividades') }}</a></li>
                     <li><div class="divider"></div></li>
                     <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
@@ -165,12 +165,15 @@
                     <li><div class="divider"></div></li>
                 @endif
                 @if(Auth::user()->hasRol('alm'))
+                    <li><a href="{{ route('conversacionDocente') }}">Mensajes</a></li>
+                    <li><div class="divider"></div></li>
                     <li><a href="{{ route('cursos') }}">{{ __('Cursos') }}</a></li>
                     <li><div class="divider"></div></li>
                     <li><a href="{{ route('Participante') }}">{{ __('Participar en Curso') }}</a></li>
                     <li><div class="divider"></div></li>
                 @endif
-                
+                <li><a href="{{ route('paginaNotificaciones') }}">Notificaciones</a></li>
+                    <li><div class="divider"></div></li>
                 <li>
                     <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
                        data-activates="drop" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>

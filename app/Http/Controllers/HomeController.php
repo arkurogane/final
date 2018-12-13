@@ -81,4 +81,13 @@ class HomeController extends Controller
         ]);
     }
 
+    public function pageNotification()
+    {
+        $id=Auth::id();
+        $notificaciones=Notification::select('*')->where('receiver_id',$id)->get();
+        return view('notificaciones',[
+            'notificaciones'=>$notificaciones,
+        ]);
+    }
+
 }

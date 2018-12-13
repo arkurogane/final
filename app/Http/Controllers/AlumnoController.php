@@ -14,6 +14,8 @@ use App\HistorialActividade;
 use App\Asignatura;
 use App\Participante;
 use App\Notification;
+use App\Conversation;
+use App\Message;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateCursoRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,12 +23,16 @@ use App\Http\Requests\CreateAsignaturaRequest;
 use App\Http\Requests\CreateActividadRequest;
 use App\Http\Requests\AddParticipantesRequest;
 use App\Http\Requests\CanjearRequest;
+use App\Http\Requests\MessageRequest;
 
 class AlumnoController extends Controller
 {
+
+    /**
+     * funcion que permite ver la vista donde el alumno puede inscribirse a un curso
+     */
     public function Participante()
     {
-        //dd('se viene hasta aca');
         $save=3;
         $id=Auth::id();
         $parts = Participante::select('*')->where('alumno_id',$id)->get();
@@ -38,6 +44,9 @@ class AlumnoController extends Controller
         ]);
     }
 
+    /**
+     * funcion que permite al estudiante participar de un curso que exista
+     */
     public function Participar(AddParticipantesRequest $request)
     {
         $save=3;
@@ -82,6 +91,9 @@ class AlumnoController extends Controller
         }  
     }
 
+    /**
+     * funcion que muestra los cursos a los cuales pertenece el alumno
+     */
     public function cursos()
     {
         $id = Auth::id();
@@ -94,6 +106,9 @@ class AlumnoController extends Controller
         ]);
     }
 
+    /**
+     * funcion que devuelve los detalle de un curso en el que esta el alumno
+     */
     public function curso_detalle($id)
     {
         $cursos=Curso::select('*')->where('id',$id)->get();
@@ -102,6 +117,9 @@ class AlumnoController extends Controller
         ]);
     }
 
+    /**
+     * funcion que devuelve los premios de un curso en el que esta un alumno
+     */
     public function premios($id)
     {
         $id_al=Auth::id();
@@ -116,6 +134,9 @@ class AlumnoController extends Controller
             'cursos'=>$cursos,
         ]);
     }
+    /**
+     * funcion que devuelve a la vista detalle del premio para que el alumno lo vea
+     */
 
     public function actividad_detalle($id1,$id2)
     {
@@ -129,7 +150,9 @@ class AlumnoController extends Controller
         ]);
         
     }
-
+    /**
+     * funcion que canjea premio y llama a funcion de guardar notificacion
+     */
     public function canjear(CanjearRequest $request)
     {
         $save=3;
@@ -172,6 +195,9 @@ class AlumnoController extends Controller
             'save'=>$save,
         ]);
     }
+    /**
+     * funcion que guarda la notificacion en base de datos
+     */
 
     private function notificacionsave($id_ac,$id_ha,$valor)
     {
@@ -197,6 +223,111 @@ class AlumnoController extends Controller
         $notificacion->sender_id=Auth::id();
         $notificacion->receiver_id=$id_docente;
         $notificacion->hist_act_id=$id_ha;
+        $notificacion->estado=0;
+        $notificacion->save();
+    }
+
+
+    public function conversations()
+    {
+        $id = Auth::id();
+        $conversations=Conversation::select('*')->where('alumno_id',$id)->get();
+        $docentes=User::select('*')->where('rol',2)->get();
+
+        return view('conversations',[
+            'conversations'=>$conversations,
+            'docentes'=>$docentes,
+        ]);
+        
+    }
+
+    public function messages($id)
+    {
+        $cons = Conversation::select('*')->where('id',$id)->get();
+        $alumnos=User::select('*')->where('id',Auth::id())->get();
+        foreach($cons as $con){
+            $docentes=User::select('*')->where('id',$con->docente_id)->get();
+        }
+        $messages=Message::select('*')->where('conversation_id',$id)->orderByRaw('created_at DESC')->get();
+        //dd($messages);
+        return view('messages',[
+            'cons'=>$cons,
+            'docentes'=>$docentes,
+            'messages'=>$messages,
+            'alumnos'=>$alumnos,
+        ]);   
+    }
+
+    public function createConversation($curso_id)
+    {
+        $id=Auth::id();
+        $cursos=Curso::select('*')->where('id',$curso_id)->get();
+        foreach($cursos as $curso){
+            $docentes=User::select('*')->where('id',$curso->docente_id)->get();
+        }
+        foreach($docentes as $docente){
+         $cons = Conversation::select('*')->where('docente_id',$docente->id)->where('alumno_id',$id)->get();
+        }
+        $con2 = Conversation::select('*')->where('id',0)->get();
+
+        if($cons != $con2){
+            foreach($cons as $con){
+                $messages=Message::select('*')->where('conversation_id',$con->id)->orderByRaw('created_at DESC')->get();
+            }
+        }else{
+            $conversation = new Conversation;
+            foreach($docentes as $docente){
+                $conversation->docente_id=$docente_id;
+            }
+            $conversation->alumno_id=$id;
+            $conversation->save();
+            $messages=Message::select('*')->where('conversation_id',$conversation->id)->orderByRaw('created_at DESC')->get();
+        }
+
+        $alumnos=User::select('*')->where('id',$id)->get();
+        return view('messages',[
+            'cons'=>$cons,
+            'docentes'=>$docentes,
+            'messages'=>$messages,
+            'alumnos'=>$alumnos,
+        ]);
+        
+    }
+
+    public function createMessage(MessageRequest $request)
+    {
+        $message= new Message;
+        $message->message=$request->input('message');
+        $message->conversation_id=$request->input('conversation_id');
+        $message->sender_id=Auth::id();
+        $message->save();
+
+        $cons = Conversation::select('*')->where('id',$request->input('conversation_id'))->get();
+        foreach($cons as $con){
+            $docentes=User::select('*')->where('id',$con->docente_id)->get();
+        }
+        $alumnos=User::select('*')->where('id',Auth::id())->get();
+        $messages=Message::select('*')->where('conversation_id',$request->input('conversation_id'))->orderByRaw('created_at DESC')->get();
+        $this->notificationMessage($alumnos,$docentes);
+        return view('messages',[
+            'cons'=>$cons,
+            'docentes'=>$docentes,
+            'messages'=>$messages,
+            'alumnos'=>$alumnos,
+        ]);
+    }
+
+    private function notificationMessage($alumnos,$docentes)
+    {
+        $notificacion= new Notification;
+        foreach ($alumnos as $alumno) {
+           $notificacion->descripcion="usted tiene un nuevo mensaje de ". $alumno->name ." ".$alumno->apellido; 
+        }
+        $notificacion->sender_id=Auth::id();
+        foreach($docentes as $docente){
+            $notificacion->receiver_id=$docente->id;
+        }
+        $notificacion->hist_act_id=0;
         $notificacion->estado=0;
         $notificacion->save();
     }
