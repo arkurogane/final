@@ -23,6 +23,9 @@
             width: 5em;
             border-radius: 1em;
         }
+        nav{
+            margin-top:3%;
+        }
         </style>
         <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
 
@@ -30,27 +33,29 @@
     <body class="cyan lighten-5">
         <div class="flex-center position-ref full-height">
             
+            <div class="container">
+                <nav class="nav-wrapper cyan darken-2">
+                    <div class="container-fluid">
+                        <a class="brand-logo" href="{{ url('/') }}"><img class="uno" src="{{ asset('imagenes/logo1.png') }}" alt=""></a>
+                        <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
+                        @if (Route::has('login'))
+                            <ul class="right hide-on-med-and-down">
+                                @auth
+                                    <li><a href="{{ url('/home') }}">Home</a></li>
+                                @else
+                                    <li><a href="{{ route('login') }}">Login</a></li>
 
-            <nav class="nav-wrapper cyan darken-2">
-                <div class="container">
-                    <a class="brand-logo" href="{{ url('/') }}"><img class="uno" src="{{ asset('imagenes/logo1.png') }}" alt=""></a>
-                    <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    
-                    @if (Route::has('login'))
-                        <ul class="right hide-on-med-and-down">
-                            @auth
-                                <li><a href="{{ url('/home') }}">Home</a></li>
-                            @else
-                                <li><a href="{{ route('login') }}">Login</a></li>
-
-                                @if (Route::has('register'))
-                                    <li><a href="{{ route('register') }}">Registro</a></li>
-                                @endif
-                            @endauth
-                        </ul>
-                    @endif
-                </div>
-            </nav>
+                                    @if (Route::has('register'))
+                                        <li><a href="{{ route('register') }}">Registro</a></li>
+                                    @endif
+                                @endauth
+                            </ul>
+                        @endif
+                    </div>
+                </nav>
+            </div>
+            
             <!--sidebar-->
             @if (Route::has('login'))
             <ul class="sidenav teal accent-4" id="mob">
@@ -77,25 +82,10 @@
                 <div class="slider">
                     <ul class="slides">
                         <li>
-                        <img class="responsive-img" src="{{ asset('imagenes/1m.jpg') }}">
-                        <div class="caption center-align">
-                            <h3>This is our big Tagline!</h3>
-                            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                        </div>
+                        <img class="responsive-img" src="{{ asset('imagenes/5.jpg') }}">
                         </li>
                         <li>
-                        <img class="responsive-img" src="{{ asset('imagenes/2m.jpg') }}">
-                        <div class="caption left-align">
-                            <h3>Left Aligned Caption</h3>
-                            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                        </div>
-                        </li>
-                        <li>
-                        <img class="responsive-img" src="{{ asset('imagenes/3m.jpg') }}">
-                        <div class="caption right-align">
-                            <h3>Right Aligned Caption</h3>
-                            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                        </div>
+                        <img class="responsive-img" src="{{ asset('imagenes/7.png') }}">
                         </li>
                     </ul>
                 </div>
@@ -103,7 +93,7 @@
                 <div class="row container">
                     <ul class="collapsible popout">
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+                            <div class="collapsible-header"><i class="material-icons">filter_drama</i>¿Que es la Gamificacion?</div>
                             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                         </li>
                         <li>

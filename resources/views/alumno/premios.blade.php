@@ -2,16 +2,15 @@
 
 @section('content')
     <div class="col s12">
-        <div class="">
+        <div class="container">
             <div class="card">
-            <div class="card-title center">Premios</div>
+            <div class="card-title center"><img class="responsive-img" width="200" height="200" src="{{ asset('imagenes/trofeo.png') }}"></div>
             <div class="card-content">
                 @foreach ($participantes as $participante)
                 <table>
                     <tbody>
                         <tr>
-                            <th>Tienes:</th>
-                            <td><h6>{{ $participante->cantidad_puntos }} Puntos</h6></td>
+                            <td><h4 class="center-align">{{ $participante->cantidad_puntos }} Puntos</h4></td>
                         </tr>
                     </tbody>
                 </table>

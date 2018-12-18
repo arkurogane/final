@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class=" ">
+    <div class="container">
         <div class="col s12">
             <div class="">
                 <div class="card">
@@ -66,7 +66,7 @@
                                         @if( $actividad->tipo ==1 && $ca->actividad_id==$actividad->id)
                                             <tr>   
                                                 <td>{{ $actividad->nombre }}</td>
-                                                <td><a href="/actividadDetalle/{{ $actividad->id }}">detalles</a></td>
+                                                <td><a href="/actividadDetalle/{{ $actividad->id }}"><i class="material-icons">create</i></a></td>
                                             </tr>
                                         @endif
                                     @endforeach                                    
@@ -87,7 +87,7 @@
                                         @if( $actividad->tipo ==2 && $ca->actividad_id==$actividad->id)
                                             <tr>   
                                                 <td>{{ $actividad->nombre }}</td>
-                                                <td><a href="/actividadDetalle/{{ $actividad->id }}">detalles</a></td>
+                                                <td><a href="/actividadDetalle/{{ $actividad->id }}"><i class="material-icons">create</i></a></td>
                                             </tr>
                                         @endif
                                     @endforeach

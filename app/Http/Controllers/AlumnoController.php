@@ -52,8 +52,7 @@ class AlumnoController extends Controller
         $save=3;
         $id=Auth::id();
         $curso=Curso::select('*')->where('codigo',$request->input('codigo'))->first();
-        $parts = Participante::select('*')->get();
-        
+        $parts = Participante::select('*')->where('alumno_id',$id)->get();
         foreach($parts as $part)
         {
             if($part->alumno_id==$id && $part->curso_id==$curso->id)
@@ -270,18 +269,19 @@ class AlumnoController extends Controller
         }
         $con2 = Conversation::select('*')->where('id',0)->get();
 
-        if($cons != $con2){
-            foreach($cons as $con){
-                $messages=Message::select('*')->where('conversation_id',$con->id)->orderByRaw('created_at DESC')->get();
-            }
-        }else{
+        if($cons == $con2){
             $conversation = new Conversation;
             foreach($docentes as $docente){
-                $conversation->docente_id=$docente_id;
+                $conversation->docente_id=$docente->id;
             }
             $conversation->alumno_id=$id;
             $conversation->save();
             $messages=Message::select('*')->where('conversation_id',$conversation->id)->orderByRaw('created_at DESC')->get();
+        
+        }else{
+            foreach($cons as $con){
+                $messages=Message::select('*')->where('conversation_id',$con->id)->orderByRaw('created_at DESC')->get();
+            }
         }
 
         $alumnos=User::select('*')->where('id',$id)->get();

@@ -11,6 +11,8 @@
                 @if(Auth::user()->hasRol('admin'))
                         <div>Acceso como administrador</div>
                     @elseif(Auth::user()->hasRol('doc'))
+                    <div class="card-title center">{{ __('Mensaje Alumnos') }}</div>
+                    <br>
                         <div class="row center">
                             @foreach ($conversations as $conversation)
                                 @foreach ($alumnos as $alumno)
@@ -22,6 +24,8 @@
                             @endforeach
                         </div>
                     @elseif(Auth::user()->hasRol('alm'))
+                    <div class="card-title center">{{ __('Mensaje Alumnos') }}</div>
+                    <br>
                         <div class="row center">
                             @foreach ($conversations as $conversation)
                                 @foreach ($docentes as $docente)

@@ -169,16 +169,21 @@ class DocenteController extends Controller
         $id = Auth::id();
 
         $comp_asigs=Asignatura::select('*')->where('docente_id',$id)->get();
-        foreach($comp_asigs as $comp_asig)
+        $void=Asignatura::select('*')->where('id',0)->get();
+        if($comp_asigs==$void)
         {
-            if($comp_asig->nombre==$request->input('nombre') || $comp_asig->codigo==$request->input('codigo'))
+            $save=1;
+        }else{
+            foreach($comp_asigs as $comp_asig)
             {
-                $save=2;
-                break;
-            }else{
-                $save=1;
-            }
-            
+               if($comp_asig->nombre==$request->input('nombre') || $comp_asig->codigo==$request->input('codigo'))
+                {
+                    $save=2;
+                    break;
+                }else{
+                    $save=1;
+                } 
+            }  
         }
         if($save==2)
         {
@@ -209,17 +214,23 @@ class DocenteController extends Controller
         $save=3;
         $id = Auth::id();
         $actividades = Actividade::select('*')->where('docente_id',$id)->get();
+        $void = Actividade::select('*')->where('id',0)->get();
         $nombre=$request->input('nombre');
-        foreach($actividades as $actividade)
-        {
-            if($actividade->nombre==$nombre)
+        if($actividades==$void){
+            $save=1;
+        }else{
+            foreach($actividades as $actividade)
             {
-                $save=2;
-                break;
-            }else{
-                $save=1;
-            }
+                if($actividade->nombre==$nombre)
+                {
+                    $save=2;
+                    break;
+                }else{
+                    $save=1;
+                }
+            }  
         }
+        
         
         if($save==2)
             {
@@ -336,7 +347,7 @@ class DocenteController extends Controller
     public function addActividad($id)
     {
         $save=3;
-        $actividades = Actividade::select('*')->get();
+        $actividades = Actividade::select('*')->where('docente_id',Auth::id())->get();
         return view('/docente.add_actividades',[
             'actividades'=>$actividades,
             'save'=>$save,

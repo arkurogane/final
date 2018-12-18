@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="">
+<div class="container">
     <div class="col s12 row">
         <div class="card">
             <div class="card-title center">{{ __('Agregar Actividad') }}</div>

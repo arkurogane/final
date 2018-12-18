@@ -32,24 +32,24 @@
                             @foreach ($alumnos as $alumno)
                                 @foreach ($messages as $message)
                                 @if($message->sender_id==$alumno->id)
-                                    <div class="card blue-grey darken-1">
-                                        <span class="card-title left-align">{{ $alumno->name }} {{ $alumno->apellido}}</span>
-                                        <div class="card-content left-align white-text">
+                                    <div class="card deep-purple lighten-5">
+                                        <span class="card-title left-align indigo-text darken-4-text">{{ $alumno->name }} {{ $alumno->apellido}}</span>
+                                        <div class="card-content left-align ">
                                             <p>{{ $message->message }}</p>
                                         </div>
                                         <div class="card-action left-align">
-                                            <p>{{$message->created_at}}</p>
+                                            <p class="indigo-text darken-4-text">{{$message->created_at}}</p>
                                         </div>
                                     </div>
                                 @endif
                                 @if($message->sender_id==$docente->id)
-                                    <div class="card blue-grey darken-1">
-                                        <span class="card-title right-align">Yo</span>
-                                        <div class="card-content right-align white-text">
+                                    <div class="card amber lighten-4">
+                                        <span class="card-title right-align indigo-text darken-4-text">Yo</span>
+                                        <div class="card-content right-align ">
                                             <p>{{ $message->message }}</p>
                                         </div>
                                         <div class="card-action right-align">
-                                            <p>{{$message->created_at}}</p>
+                                            <p class="indigo-text darken-4-text">{{$message->created_at}}</p>
                                         </div>
                                     </div>
                                 @endif
@@ -82,24 +82,24 @@
                             @foreach ($docentes as $docente)
                                 @foreach ($messages as $message)
                                 @if($message->sender_id==$docente->id)
-                                    <div class="card blue-grey darken-1">
-                                        <span class="card-title left-align">{{ $docente->name }} {{ $docente->apellido}}</span>
-                                        <div class="card-content left-align white-text">
+                                <div class="card deep-purple lighten-5">
+                                        <span class="card-title left-align indigo-text darken-4-text">{{ $docente->name }} {{ $docente->apellido}}</span>
+                                        <div class="card-content left-align ">
                                             <p>{{ $message->message }}</p>
                                         </div>
                                         <div class="card-action left-align">
-                                            <p>{{$message->created_at}}</p>
+                                            <p class="indigo-text darken-4-text">{{$message->created_at}}</p>
                                         </div>
                                     </div>
                                 @endif
                                 @if($message->sender_id==$alumno->id)
-                                    <div class="card blue-grey darken-1">
-                                        <span class="card-title right-align">Yo</span>
-                                        <div class="card-content right-align white-text">
+                                <div class="card amber lighten-4">
+                                        <span class="card-title right-align indigo-text darken-4-text">Yo</span>
+                                        <div class="card-content right-align ">
                                             <p>{{ $message->message }}</p>
                                         </div>
                                         <div class="card-action right-align">
-                                            <p>{{$message->created_at}}</p>
+                                            <p class="indigo-text darken-4-text">{{$message->created_at}}</p>
                                         </div>
                                     </div>
                                 @endif

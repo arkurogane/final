@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class=" ">
+    <div class="container">
         <div class="col s12 row">
             <div class="">
                 <div class="card">
@@ -48,7 +48,7 @@
                                                     </p> 
                                                 </td>
                                                 <td>{{ $actividad->valor }}</td>
-                                                <td><a href="/actividadDetalle/{{ $actividad->id }}">detalles</a></td>
+                                                <td><a href="/actividadDetalle/{{ $actividad->id }}"><i class="material-icons">create</i></a></td>
                                             </tr>
                                         @endif
                                     @endforeach

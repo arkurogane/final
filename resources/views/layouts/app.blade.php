@@ -23,7 +23,7 @@
     <!-- Styles -->
     @auth 
     <style>
-         header, main, footer {
+    /*     header, main, footer {
       padding-left: 300px;
     }
 
@@ -34,7 +34,7 @@
     }
     .logo{
         margin-left: 5em;
-    }
+    }*/
     
     </style>
     @endauth
@@ -44,157 +44,153 @@
         width: 5em;
         border-radius: 1em;
     }
+    nav{
+            margin-top:3%;
+        }
     </style>
     <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     
 </head>
 <body>
     <div id="app">
-        <nav class="nav-wrapper cyan darken-2">
-            <div class="container">
-            <a class="brand-logo logo" href="{{ url('/') }}"><img class="uno" src="{{ asset('imagenes/logo1.png') }}" alt=""></a>
-                <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
-                <ul class="right hide-on-med-and-down">
-                    <!-- Authentication Links -->
+            <div class="flex-center position-ref full-height">
+            
+                    <div class="container">
+                        <nav class="nav-wrapper cyan darken-2">
+                        <div class="container-fluid">
+                        <a class="brand-logo logo" href="{{ url('/home') }}"><img class="uno" src="{{ asset('imagenes/logo1.png') }}" alt=""></a>
+                            <a href="#" data-target="mob" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
+                            <ul class="right hide-on-med-and-down">
+                                <!-- Authentication Links -->
+                                @guest
+                            <li><a href="{{ route('login') }}" class="white-text">{{ __('Login') }}</a></li>
+                            <li>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="white-text">{{ __('Registrar') }}</a>
+                                @endif
+                            </li>
+                        @else
+                            @if(Auth::user()->hasRol('admin'))
+                                <li><a href="{{ route('docentes') }}" class="white-text">{{ __('Docentes') }}</a></li>
+                            @endif
+                            @if(Auth::user()->hasRol('doc'))
+                                <li><a href="{{ route('conversations') }}">Mensajes</a></li>
+                                <li><a href="{{ route('Actividades') }}" >{{ __('Crear Actividades') }}</a></li>
+                                <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
+                                <li>
+                                    <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                                        data-activates="cursos2" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Cursos<i class="material-icons right">arrow_drop_down</i></a>
+                                    </a>
+                                    <ul class="dropdown-content center" id="cursos2">
+                                        <li><a href="{{ route('crearCurso') }}">{{ __('Crear Curso') }}</a></li>
+                                        <li><a href="{{ route('listaCurso') }}">{{ __('listar Cursos') }}</a></li>
+                                        <li><a href="{{ route('cursosCerrados') }}">{{ __('Cursos Cerrados') }}</a></li>
+                                    </ul>
+                                </li>
+                            @endif
+                            @if(Auth::user()->hasRol('alm'))
+                                <li><a href="{{ route('conversacionDocente') }}">Mensajes</a></li>
+                                <li><a href="{{ route('cursos') }}">{{ __('Cursos') }}</a></li>
+                                <li><a href="{{ route('Participante') }}">{{ __('Participar en Curso') }}</a></li>
+                            @endif
+                            <li><a href="{{ route('paginaNotificaciones') }}">Notificaciones</a></li>
+                            <li>
+                                <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
+                                data-activates="drop2" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a>
+                                </a>
+                                <ul class="dropdown-content" id="drop2">
+                                    <li><a href="/datos">{{ __('Mis Datos') }}</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+                                    </li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </ul>
+                            </li>
+                        @endguest
+                                </ul>
+                        </div>
+                    </nav>
+                    </div>
+                    
+                    <!--sidebar-->
+                    <ul class="sidenav teal accent-4" id="mob">
+                        <li><a class="brand-logo" href="{{ url('/home') }}">{{ __('Home') }}</a></li>
                     @guest
-                        <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                        <li><div class="divider"></div></li>
+                        <li><a href="{{ route('login') }}" class="white-text">{{ __('Login') }}</a></li>
+                        <li><div class="divider"></div></li>
                         <li>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}">{{ __('Registrar') }}</a>
+                                <a href="{{ route('register') }}" class="white-text">{{ __('Registrar') }}<i class="material-icons">edit</i></a>
                             @endif
                         </li>
                     @else
+                        <li><div class="divider"></div></li>
                         @if(Auth::user()->hasRol('admin'))
-                            <li><a href="{{ route('docentes') }}">{{ __('Docentes') }}</a></li>
+                            <li>
+                                <a href="{{ route('docentes') }}" class="white-text">{{ __('Docentes') }}</a>
+                            </li>
+                            <li><div class="divider"></div></li>
                         @endif
                         @if(Auth::user()->hasRol('doc'))
-                            <!--<li><a href="{{ route('addParticipantes') }}">{{ __('Añadir Participantes') }}</a></li>
-                            <li><a href="{{ route('Actividades') }}">{{ __('Crear Actividades') }}</a></li>
+                            <li><a href="{{ route('conversations') }}">Mensajes</a></li>
+                            <li><div class="divider"></div></li>
+                            <li><a href="{{ route('Actividades') }}" >{{ __('Crear Actividades') }}</a></li>
+                            <li><div class="divider"></div></li>
                             <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
+                            <li><div class="divider"></div></li>
                             <li>
                                 <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
-                                    data-activates="cursos2" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    data-activates="cursos" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Cursos<i class="material-icons right">arrow_drop_down</i></a>
                                 </a>
-                                <ul class="dropdown-content" id="cursos2">
+                                <ul class="dropdown-content center" id="cursos">
                                     <li><a href="{{ route('crearCurso') }}">{{ __('Crear Curso') }}</a></li>
                                     <li><a href="{{ route('listaCurso') }}">{{ __('listar Cursos') }}</a></li>
                                     <li><a href="{{ route('cursosCerrados') }}">{{ __('Cursos Cerrados') }}</a></li>
                                 </ul>
-                            </li>-->
+                            </li>
+                            <li><div class="divider"></div></li>
                         @endif
                         @if(Auth::user()->hasRol('alm'))
-                            <!--<li><a href="{{ route('cursos') }}">{{ __('Cursos') }}</a></li>
-                            <li><a href="{{ route('Participante') }}">{{ __('Participar en Curso') }}</a></li>-->
+                            <li><a href="{{ route('conversacionDocente') }}">Mensajes</a></li>
+                            <li><div class="divider"></div></li>
+                            <li><a href="{{ route('cursos') }}">{{ __('Cursos') }}</a></li>
+                            <li><div class="divider"></div></li>
+                            <li><a href="{{ route('Participante') }}">{{ __('Participar en Curso') }}</a></li>
+                            <li><div class="divider"></div></li>
                         @endif
-                        <!--<li>
-                            <a id="navbarDropdown" class="dropdown-button collection-item" href="#" role="button"
-                            data-activates="dp1" data-belowOrigin="true" data-constrainWidth="false" 
-                            aria-haspopup="true" aria-expanded="false" v-pre href="">
-                            <i class="large material-icons">notifications_active</i>
-                            </a>
-                        </li>
-                        <ul class="dropdown-content" id="dp1">
-                            <li>
-                                <a class="dropdown-item" href="#">{{ __('notificacion_1') }}</a>
-                            </li>
-                        </ul>-->
-                        
+                        <li><a href="{{ route('paginaNotificaciones') }}">Notificaciones</a></li>
+                            <li><div class="divider"></div></li>
                         <li>
                             <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
-                               data-activates="drop1" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
+                               data-activates="drop" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a>
                             </a>
+                            <ul class="dropdown-content" id="drop">
+                                <li><a href="/datos">{{ __('Mis Datos') }}</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                </li>
+        
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </ul>
                         </li>
-                        <ul class="dropdown-content" id="drop1">
-                            <li><a href="/datos">{{ __('Mis Datos') }}</a></li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                            </li>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </ul>
+                        <li><div class="divider"></div></li>
                     @endguest
-                    </ul>
-            </div>
-        </nav>
-        <!--sidenav-->
-        <ul class="sidenav @auth sidenav-fixed @endauth teal accent-4" id="mob">
-                <li><a class="brand-logo" href="{{ url('/home') }}">{{ __('Home') }}</a></li>
-            @guest
-                <li><div class="divider"></div></li>
-                <li><a href="{{ route('login') }}" class="white-text">{{ __('Login') }}</a></li>
-                <li><div class="divider"></div></li>
-                <li>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="white-text">{{ __('Registrar') }}<i class="material-icons">edit</i></a>
-                    @endif
-                </li>
-            @else
-                <li><div class="divider"></div></li>
-                @if(Auth::user()->hasRol('admin'))
-                    <li>
-                        <a href="{{ route('docentes') }}" class="white-text">{{ __('Docentes') }}</a>
-                    </li>
-                    <li><div class="divider"></div></li>
-                @endif
-                @if(Auth::user()->hasRol('doc'))
-                    <li><a href="{{ route('conversations') }}">Mensajes</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a href="{{ route('Actividades') }}" >{{ __('Crear Actividades') }}</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a href="{{ route('asignaturas') }}">{{ __('Asignaturas') }}</a></li>
-                    <li><div class="divider"></div></li>
-                    <li>
-                        <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
-                            data-activates="cursos" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Cursos<i class="material-icons right">arrow_drop_down</i></a>
-                        </a>
-                        <ul class="dropdown-content center" id="cursos">
-                            <li><a href="{{ route('crearCurso') }}">{{ __('Crear Curso') }}</a></li>
-                            <li><a href="{{ route('listaCurso') }}">{{ __('listar Cursos') }}</a></li>
-                            <li><a href="{{ route('cursosCerrados') }}">{{ __('Cursos Cerrados') }}</a></li>
-                        </ul>
-                    </li>
-                    <li><div class="divider"></div></li>
-                @endif
-                @if(Auth::user()->hasRol('alm'))
-                    <li><a href="{{ route('conversacionDocente') }}">Mensajes</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a href="{{ route('cursos') }}">{{ __('Cursos') }}</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a href="{{ route('Participante') }}">{{ __('Participar en Curso') }}</a></li>
-                    <li><div class="divider"></div></li>
-                @endif
-                <li><a href="{{ route('paginaNotificaciones') }}">Notificaciones</a></li>
-                    <li><div class="divider"></div></li>
-                <li>
-                    <a id="navbarDropdown" class="dropdown-button" href="#" role="button"
-                       data-activates="drop" data-belowOrigin="true" data-constrainWidth="false" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <i class="material-icons right">arrow_drop_down</i></a>
-                    </a>
-                    <ul class="dropdown-content" id="drop">
-                        <li><a href="/datos">{{ __('Mis Datos') }}</a></li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                        </li>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </ul>
-                </li>
-                <li><div class="divider"></div></li>
-            @endguest
-        </ul>
+                </ul> 
+                </div>
 
         <main class="py-4">
             @yield('content')

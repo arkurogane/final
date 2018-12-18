@@ -41,7 +41,7 @@ Route::post('/creaCurso', 'DocenteController@creaCurso')->name('creaCurso')->mid
 Route::get('/listaCurso','DocenteController@listaCurso')->name('listaCurso')->middleware('doc','auth');
 Route::get('/cursoDetalle/{id}', 'DocenteController@cursoDetalle')->name('cursoDetalle')->middleware('doc','auth');
 
-Route::get('/cerrarCurso/{id}', 'DocenteController@cerrarCurso')->name('cerrarCurso')->middleware('doc','auth');
+Route::get('/cursoDetalle/cerrarCurso/{id}', 'DocenteController@cerrarCurso')->name('cerrarCurso')->middleware('doc','auth');
 
 Route::get('/cursosCerrados', 'DocenteController@cursosCerrados')->name('cursosCerrados')->middleware('doc','auth');
 
